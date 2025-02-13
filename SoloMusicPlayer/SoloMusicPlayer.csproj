@@ -86,6 +86,7 @@
     <Compile Include="ListTileForm.Designer.cs">
       <DependentUpon>ListTileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MouseClicker.cs" />
     <Compile Include="MusicsScreen.cs">
       <SubType>Form</SubType>
     </Compile>

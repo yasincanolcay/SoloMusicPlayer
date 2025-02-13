@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ListTileForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -37,12 +38,18 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.oynatmaListesineEkleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bilgiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dosyaKonumunuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.silToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -105,6 +112,7 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox4.TabIndex = 5;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.Click += new System.EventHandler(this.pictureBox4_Click);
             // 
             // pictureBox3
             // 
@@ -120,6 +128,7 @@
             // 
             // pictureBox2
             // 
+            this.pictureBox2.ContextMenuStrip = this.contextMenuStrip1;
             this.pictureBox2.Dock = System.Windows.Forms.DockStyle.Right;
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.Location = new System.Drawing.Point(610, 0);
@@ -128,6 +137,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
             // 
             // pictureBox1
             // 
@@ -139,6 +149,46 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(30)))), ((int)(((byte)(54)))));
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.oynatmaListesineEkleToolStripMenuItem,
+            this.bilgiToolStripMenuItem,
+            this.dosyaKonumunuToolStripMenuItem,
+            this.silToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.ShowImageMargin = false;
+            this.contextMenuStrip1.Size = new System.Drawing.Size(171, 114);
+            // 
+            // oynatmaListesineEkleToolStripMenuItem
+            // 
+            this.oynatmaListesineEkleToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.oynatmaListesineEkleToolStripMenuItem.Name = "oynatmaListesineEkleToolStripMenuItem";
+            this.oynatmaListesineEkleToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.oynatmaListesineEkleToolStripMenuItem.Text = "Oynatma Listesine Ekle";
+            // 
+            // bilgiToolStripMenuItem
+            // 
+            this.bilgiToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.bilgiToolStripMenuItem.Name = "bilgiToolStripMenuItem";
+            this.bilgiToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.bilgiToolStripMenuItem.Text = "Bilgi";
+            // 
+            // dosyaKonumunuToolStripMenuItem
+            // 
+            this.dosyaKonumunuToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.dosyaKonumunuToolStripMenuItem.Name = "dosyaKonumunuToolStripMenuItem";
+            this.dosyaKonumunuToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.dosyaKonumunuToolStripMenuItem.Text = "Konumu Aç";
+            // 
+            // silToolStripMenuItem
+            // 
+            this.silToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.silToolStripMenuItem.Name = "silToolStripMenuItem";
+            this.silToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.silToolStripMenuItem.Text = "Sil";
             // 
             // ListTileForm
             // 
@@ -152,6 +202,7 @@
             this.Name = "ListTileForm";
             this.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
             this.Text = "ListTileForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ListTileForm_FormClosed);
             this.Load += new System.EventHandler(this.ListTileForm_Load);
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
@@ -160,6 +211,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -174,5 +226,10 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         public System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem oynatmaListesineEkleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bilgiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dosyaKonumunuToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem silToolStripMenuItem;
     }
 }

@@ -50,6 +50,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "MusicsScreen";
             this.Text = "MusicsScreen";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MusicsScreen_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MusicsScreen_FormClosed);
             this.Load += new System.EventHandler(this.MusicsScreen_Load);
             this.ResumeLayout(false);
 

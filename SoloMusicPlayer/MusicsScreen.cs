@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace SoloMusicPlayer
     public partial class MusicsScreen : Form
     {
         public AxWindowsMediaPlayer mediaPlayer;
+        public PictureBox favoritePictureBox;
         DatabaseHelper db = DatabaseHelper.Instance;
+        AxWindowsMediaPlayer infoPlayer = new AxWindowsMediaPlayer();
+        List<ListTileForm> musicCards=new List<ListTileForm>();
+
 
         public MusicsScreen()
         {
@@ -100,22 +105,38 @@ namespace SoloMusicPlayer
                     layoutPanel.HorizontalScroll.Visible = false;
                 };
                 mediaPlayer.settings.autoStart = false;
+                infoPlayer.CreateControl();
+                infoPlayer.settings.autoStart = false;
                 foreach (string item in musicPaths)
                 {
-                    mediaPlayer.URL = item;
+
+                    //burada müzik çalar duruyor çünkü url değişiyor
+                    //sorun burada
+                    List<string> favoriteList = db.GetFavoriteSongs();
+                    infoPlayer.URL = item;
                     // Medya bilgilerini çekin
-                    IWMPMedia mediaInfo = mediaPlayer.Ctlcontrols.currentItem;
+                    IWMPMedia mediaInfo = infoPlayer.Ctlcontrols.currentItem;
                     string songTitle = mediaInfo.getItemInfo("Title");
                     string artist = mediaInfo.getItemInfo("Author");
                     string album = mediaInfo.getItemInfo("Album");
 
                     ListTileForm tile = new ListTileForm();
+                    if (favoriteList.Contains(item))
+                    {
+                        tile.isFavorite = true;
+                    }
+                    else
+                    {
+                        tile.isFavorite = false;
+                    }
                     tile.musicPath = item;
                     tile.mediaPlayer = mediaPlayer;
-                    tile.label1.Text = mediaPlayer.Ctlcontrols.currentItem.name;
+                    tile.label1.Text = infoPlayer.Ctlcontrols.currentItem.name;
                     tile.label2.Text = artist+" "+album;
                     tile.TopLevel = false;
+                    tile.favoritePictureBox = favoritePictureBox;
                     tile.Width = layoutPanel.ClientSize.Width; // Başlangıçta FlowLayoutPanel genişliğine göre ayarla
+                    musicCards.Add(tile);
                     layoutPanel.Controls.Add(tile);
                     tile.Show();
                 }
@@ -129,6 +150,24 @@ namespace SoloMusicPlayer
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void MusicsScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+           
+        }
+
+        private void MusicsScreen_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //herşeyi bellekten at
+            infoPlayer.Dispose();
+            for (int i = 0; i < musicCards.Count; i++)
+            {
+                musicCards[i].Dispose();
+            }
+            panel1.Dispose();
+            this.Dispose();
+            Debug.WriteLine("Müzik sayfası kapatıldı");
         }
     }
 }

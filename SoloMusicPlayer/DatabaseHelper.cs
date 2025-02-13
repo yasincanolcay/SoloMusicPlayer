@@ -84,5 +84,69 @@ namespace SoloMusicPlayer
             }
         }
 
+        public bool AddOrRemoveSongs(string path,bool isFavorite)
+        {
+            try
+            {
+                connection.Open();
+                if (!isFavorite)
+                {
+                    string query = "INSERT INTO [Songs] (path) VALUES (@pathname)";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@pathname", path);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                else {
+                    string query = "DELETE FROM Songs WHERE path = @pathText";
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@pathText", path);
+                        command.ExecuteNonQuery();
+                    }
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return false;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public List<string> GetFavoriteSongs()
+        {
+            List<string> paths = new List<string>();
+
+            try
+            {
+                connection.Open();
+                string query = "SELECT path FROM Songs";
+                using (SqlCommand command = new SqlCommand(query, connection))
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        paths.Add(reader.GetString(0));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            finally
+            {
+                connection.Close();
+            }
+
+            return paths;
+        }
+
     }
 }
