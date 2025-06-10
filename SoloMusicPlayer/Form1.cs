@@ -6,6 +6,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,6 +17,19 @@ namespace SoloMusicPlayer
     //46;51;73
     public partial class Form1 : Form
     {
+        //----FORM BORDER RADIUS DESIGN---//
+        [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
+        private static extern IntPtr CreateRoundRectRgn(int NLeftRect
+          , int NRightRect, int NTopRect, int NBottomRect, int NWidthEllipse, int NHeightEllipse);
+
+        //----------------------------------------//
+        //FORM EKRANDA SURUKLEMEK ICIN INT KONUM DEGISKENLERI VE BOOL
+        private bool dragging = false;
+        private Point dragCursorPoint;
+        private Point dragFormPoint;
+        private string sqlDosyaYolu = "";
+        bool isMaximized = false;
+        Rectangle normalBounds;
         DatabaseHelper db = DatabaseHelper.Instance;
         bool isStart = false;
         bool isFavorite = false;
@@ -23,6 +37,8 @@ namespace SoloMusicPlayer
         public Form1()
         {
             InitializeComponent();
+            Region = System.Drawing.Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));//form border yuvarla
+            System.Windows.Forms.ThreadExceptionDialog.CheckForIllegalCrossThreadCalls = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -55,13 +71,21 @@ namespace SoloMusicPlayer
 
         private void pictureBox3_Click(object sender, EventArgs e)
         {
-            if(this.WindowState == FormWindowState.Normal)
+            if (!isMaximized)
             {
-                this.WindowState = FormWindowState.Maximized;
+                normalBounds = this.Bounds;
+
+                this.Bounds = Screen.FromHandle(this.Handle).WorkingArea;
+                this.Region = null; // Yuvarlaklığı kaldır
+                isMaximized = true;
             }
             else
             {
-                this.WindowState = FormWindowState.Normal;
+                this.Bounds = normalBounds;
+
+                // Yuvarlak formu geri yükle
+                this.Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, this.Width, this.Height, 25, 25));
+                isMaximized = false;
             }
         }
 
@@ -297,6 +321,32 @@ namespace SoloMusicPlayer
             label1.Dispose();
             this.Dispose();
             Debug.WriteLine("Ana Form Kapatıldı");
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel3_MouseDown(object sender, MouseEventArgs e)
+        {
+            dragging = true;
+            dragCursorPoint = Cursor.Position;
+            dragFormPoint = this.Location;
+        }
+
+        private void panel3_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (dragging)
+            {
+                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
+                this.Location = Point.Add(dragFormPoint, new Size(dif));
+            }
+        }
+
+        private void panel3_MouseUp(object sender, MouseEventArgs e)
+        {
+            dragging = false;
         }
     }
 }

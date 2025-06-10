@@ -132,7 +132,15 @@ namespace SoloMusicPlayer
                     tile.musicPath = item;
                     tile.mediaPlayer = mediaPlayer;
                     tile.label1.Text = infoPlayer.Ctlcontrols.currentItem.name;
-                    tile.label2.Text = artist+" "+album;
+                    if (artist != "" && album != "")
+                    {
+                        tile.label2.Text = artist + " " + album;
+                    }
+                    else
+                    {
+                        tile.label2.Text = "Bilinmiyor";
+
+                    }
                     tile.TopLevel = false;
                     tile.favoritePictureBox = favoritePictureBox;
                     tile.Width = layoutPanel.ClientSize.Width; // Başlangıçta FlowLayoutPanel genişliğine göre ayarla
